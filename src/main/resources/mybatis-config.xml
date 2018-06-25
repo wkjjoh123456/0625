@@ -8,7 +8,7 @@
         <setting name="logImpl" value="LOG4J"/>
     </settings>
     <typeAliases>
-        <package name="cn.stud.entity.Stud"/>
+        <package name="cn.stud.entity"/>
     </typeAliases>
 
 </configuration>

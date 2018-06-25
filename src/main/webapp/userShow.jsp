@@ -99,10 +99,12 @@
     </form>
 </div>
 <div id="dlg-buttons">
+    <table cellpadding="0" cellspacing="0" style="width:100%">
     <a href="javascript:saveUser()" class="easyui-linkbutton"
        iconCls="icon-ok">保存</a>
     <a href="javascript:closeUserDialog()" class="easyui-linkbutton"
        iconCls="icon-cancel">关闭</a>
+    </table>
 </div>
 </body>
 <script type="text/javascript">
