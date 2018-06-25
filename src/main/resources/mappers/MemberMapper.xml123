@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.stud.dao.MemberMapper" >
+  <resultMap id="BaseResultMap" type="cn.stud.entity.Member" >
+    <id column="m_id" property="mId" jdbcType="INTEGER" />
+    <result column="m_name" property="mName" jdbcType="VARCHAR" />
+    <result column="m_password" property="mPassword" jdbcType="VARCHAR" />
+    <result column="m_age" property="mAge" jdbcType="INTEGER" />
+    <result column="m_sex" property="mSex" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    m_id, m_name, m_password, m_age, m_sex
+  </sql>
+
+  <select id="findUsers" parameterType="map" resultMap="BaseResultMap">
+    select id,name,age,sex,addr from stud1
+    <where>
+      <if test="name!=null and name!=''">
+        and name like #{name}
+      </if>
+    </where>
+    <if test="start!=null and size !=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+
+  <select id="getTotalUser" parameterType="Map" resultType="Long">
+    select count(*) from stud1
+    <where>
+      <if test="name!=null and name!='' ">
+        and name like #{name}
+      </if>
+    </where>
+  </select>
+
+  <delete id = "deleteUser" parameterType="String">
+
+    delete from stud1 where id=#{id}
+  </delete>
+
+  <insert id="addUser" parameterType="Map">
+    insert into stud1(id,name,age,sex,addr)
+    values(#{id},#{name},#{age},#{sex},#{addr})
+  </insert>
+
+
+  <update id="updateMember" parameterType="Map">
+    update stud1
+    <set>
+      <if test="m_Name!=null and m_Name!='' ">
+        name=#{name},
+      </if>
+      <if test="age!=null and age!='' ">
+        age=#{age},
+      </if>
+      <if test="addr!=null and addr!='' ">
+        addr=#{addr},
+      </if>
+      <if test="sex!=null and sex!='' ">
+        sex=#{sex}
+      </if>
+    </set>
+    where id=#{id}
+
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ssm_member
+    where m_id = #{mId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ssm_member
+    where m_id = #{mId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.stud.entity.Member" >
+    insert into ssm_member (m_id, m_name, m_password, 
+      m_age, m_sex)
+    values (#{mId,jdbcType=INTEGER}, #{mName,jdbcType=VARCHAR}, #{mPassword,jdbcType=VARCHAR}, 
+      #{mAge,jdbcType=INTEGER}, #{mSex,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.stud.entity.Member" >
+    insert into ssm_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mId != null" >
+        m_id,
+      </if>
+      <if test="mName != null" >
+        m_name,
+      </if>
+      <if test="mPassword != null" >
+        m_password,
+      </if>
+      <if test="mAge != null" >
+        m_age,
+      </if>
+      <if test="mSex != null" >
+        m_sex,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mId != null" >
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="mName != null" >
+        #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mPassword != null" >
+        #{mPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mAge != null" >
+        #{mAge,jdbcType=INTEGER},
+      </if>
+      <if test="mSex != null" >
+        #{mSex,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.stud.entity.Member" >
+    update ssm_member
+    <set >
+      <if test="mName != null" >
+        m_name = #{mName,jdbcType=VARCHAR},
+      </if>
+      <if test="mPassword != null" >
+        m_password = #{mPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="mAge != null" >
+        m_age = #{mAge,jdbcType=INTEGER},
+      </if>
+      <if test="mSex != null" >
+        m_sex = #{mSex,jdbcType=INTEGER},
+      </if>
+    </set>
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.stud.entity.Member" >
+    update ssm_member
+    set m_name = #{mName,jdbcType=VARCHAR},
+      m_password = #{mPassword,jdbcType=VARCHAR},
+      m_age = #{mAge,jdbcType=INTEGER},
+      m_sex = #{mSex,jdbcType=INTEGER}
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+</mapper>
